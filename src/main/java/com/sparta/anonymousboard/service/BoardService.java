@@ -49,4 +49,16 @@ public class BoardService {
         board.update(requestDto);
         return new BoardResponseDto(board);
     }
+
+    public Long deleteBoard(Long id, String password) {
+        Board board = findBoard(id);
+
+        if (!password.equals(board.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+        }
+
+        boardRepository.delete(board);
+
+        return id;
+    }
 }

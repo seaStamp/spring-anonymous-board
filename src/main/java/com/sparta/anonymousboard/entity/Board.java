@@ -10,14 +10,14 @@ import lombok.Setter;
 @Setter
 @Table(name = "board")
 @NoArgsConstructor
-public class Baord extends Timestamped {
+public class Board extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title", nullable = false, length = 500)
     private String title;
-    @Column(name = "writer", nullable = false, length = 500)
-    private String writer;
+    @Column(name = "author", nullable = false, length = 500)
+    private String author;
     @Column(name = "password", nullable = false, length = 500)
     private String password;
     @Column(name = "content", nullable = false)

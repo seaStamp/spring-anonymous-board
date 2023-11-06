@@ -1,14 +1,5 @@
 # 익명 게시판 서버 만들기
 
-## Use case diagram
-
-<img src="https://raw.githubusercontent.com/seaStamp/spring-anonymous-board/1270ac25003c13d8eef84d66ac1473b240e9268b/Use-case-diagram.svg">
-
-## ERD
-
-## API 명세서
-
-
 ## 필수 구현 기능
 - [ ] 게시글 작성 기능
     - `제목`, `작성자명`, `비밀번호`, `작성 내용`, `작성일`을 저장할 수 있습니다.

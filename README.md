@@ -1,5 +1,16 @@
 # 익명 게시판 서버 만들기
 
+## Use case diagram
+![Use-case-diagram.svg](docs/Use-case-diagram.svg)
+
+## API 명세서
+[익명게시판 api 명세서](https://documenter.getpostman.com/view/30904217/2s9YXfcP8o)
+
+## ERD
+![ERD.png](docs%2FERD.png)
+
+-------
+
 ## 필수 구현 기능
 - [x] 게시글 작성 기능
     - `제목`, `작성자명`, `비밀번호`, `작성 내용`, `작성일`을 저장할 수 있습니다.

@@ -1,5 +1,6 @@
 package com.sparta.anonymousboard.entity;
 
+import com.sparta.anonymousboard.dto.BoardRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,17 @@ public class Board extends Timestamped {
     private Long id;
     @Column(name = "title", nullable = false, length = 500)
     private String title;
-    @Column(name = "author", nullable = false, length = 500)
+    @Column(name = "author", nullable = false)
     private String author;
-    @Column(name = "password", nullable = false, length = 500)
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 500)
     private String content;
+
+    public Board(BoardRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.author = requestDto.getAuthor();
+        this.password = requestDto.getPassword();
+        this.content = requestDto.getContent();
+    }
 }

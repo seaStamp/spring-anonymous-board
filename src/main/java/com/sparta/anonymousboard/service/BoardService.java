@@ -1,9 +1,11 @@
 package com.sparta.anonymousboard.service;
 
+import com.sparta.anonymousboard.dto.BoardDeleteRequestDto;
 import com.sparta.anonymousboard.dto.BoardRequestDto;
 import com.sparta.anonymousboard.dto.BoardResponseDto;
 import com.sparta.anonymousboard.entity.Board;
 import com.sparta.anonymousboard.repository.BoardRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +21,7 @@ public class BoardService {
     public BoardResponseDto createMemo(BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         Board saveBoard = boardRepository.save(board);
-        BoardResponseDto boardResponseDto = new BoardResponseDto(saveBoard);
-        return boardResponseDto;
+        return new BoardResponseDto(saveBoard);
     }
 
     public List<BoardResponseDto> getBoards() {
@@ -39,6 +40,7 @@ public class BoardService {
         );
     }
 
+    @Transactional
     public BoardResponseDto updateBoard(Long id, BoardRequestDto requestDto) {
         // 선택한 게시판이 DB에 존재하는지 확인
         Board board = findBoard(id);
@@ -50,10 +52,10 @@ public class BoardService {
         return new BoardResponseDto(board);
     }
 
-    public Long deleteBoard(Long id, String password) {
+    public Long deleteBoard(Long id, BoardDeleteRequestDto requestDto) {
         Board board = findBoard(id);
 
-        if (!password.equals(board.getPassword())) {
+        if (!requestDto.getPassword().equals(board.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
         }
 

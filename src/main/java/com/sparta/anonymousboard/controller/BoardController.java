@@ -1,5 +1,6 @@
 package com.sparta.anonymousboard.controller;
 
+import com.sparta.anonymousboard.dto.BoardDeleteRequestDto;
 import com.sparta.anonymousboard.dto.BoardRequestDto;
 import com.sparta.anonymousboard.dto.BoardResponseDto;
 import com.sparta.anonymousboard.entity.Board;
@@ -18,9 +19,8 @@ public class BoardController {
     }
 
     @PostMapping("/boards")
-    public BoardResponseDto createBoard(BoardRequestDto requestDto){
-        Board board = new Board(requestDto);
-        return boardService.createMemo(requestDto);
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto){
+        return boardService.createBoard(requestDto);
     }
 
     @GetMapping("/boards")
@@ -39,7 +39,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/boards/{id}")
-    public Long deleteBoard(@RequestHeader("id") Long id, @RequestHeader("password") String password){
-        return boardService.deleteBoard(id,password);
+    public Long deleteBoard(@PathVariable Long id, @RequestBody BoardDeleteRequestDto requestDto){
+        return boardService.deleteBoard(id,requestDto);
     }
 }

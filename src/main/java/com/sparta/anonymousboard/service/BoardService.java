@@ -18,7 +18,7 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public BoardResponseDto createMemo(BoardRequestDto requestDto) {
+    public BoardResponseDto createBoard(BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         Board saveBoard = boardRepository.save(board);
         return new BoardResponseDto(saveBoard);

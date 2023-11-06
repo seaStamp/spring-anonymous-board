@@ -29,7 +29,12 @@ public class BoardController {
     }
 
     @GetMapping("/boards/{id}")
-    public BoardResponseDto getBoardByID(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
+    public BoardResponseDto getBoardByID(@PathVariable Long id){
         return boardService.getBoardByID(id);
+    }
+
+    @PutMapping("/boards/{id}")
+    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
+        return boardService.updateBoard(id, requestDto);
     }
 }

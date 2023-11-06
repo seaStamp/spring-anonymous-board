@@ -4,9 +4,7 @@ import com.sparta.anonymousboard.dto.BoardRequestDto;
 import com.sparta.anonymousboard.dto.BoardResponseDto;
 import com.sparta.anonymousboard.entity.Board;
 import com.sparta.anonymousboard.service.BoardService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +26,10 @@ public class BoardController {
     @PostMapping("/boards")
     public List<BoardResponseDto> getBoards(){
         return boardService.getBoards();
+    }
+
+    @PostMapping("/boards/{id}")
+    public BoardResponseDto getBoardByID(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
+        return boardService.getBoardByID(id);
     }
 }

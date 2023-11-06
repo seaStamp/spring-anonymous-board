@@ -26,4 +26,16 @@ public class BoardService {
     public List<BoardResponseDto> getBoards() {
         return boardRepository.findAllByOrderByCreatedAtDesc().stream().map(BoardResponseDto::new).toList();
     }
+
+    public BoardResponseDto getBoardByID(Long id) {
+        return boardRepository.findById(id).map(BoardResponseDto::new).orElseThrow(() ->
+                new IllegalArgumentException("선택한 게시글은 존재하지 않습니다.")
+        );
+    }
+
+    private Board findBoard(Long id){
+        return boardRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("선택한 게시글은 존재하지 않습니다.")
+        );
+    }
 }

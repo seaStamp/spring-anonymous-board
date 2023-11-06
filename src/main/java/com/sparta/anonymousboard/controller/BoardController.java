@@ -23,12 +23,12 @@ public class BoardController {
         return boardService.createMemo(requestDto);
     }
 
-    @PostMapping("/boards")
+    @GetMapping("/boards")
     public List<BoardResponseDto> getBoards(){
         return boardService.getBoards();
     }
 
-    @PostMapping("/boards/{id}")
+    @GetMapping("/boards/{id}")
     public BoardResponseDto getBoardByID(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
         return boardService.getBoardByID(id);
     }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class BoardResponseDto {
+public class BoardResponseDto{
     private Long id;
     private String title;
     private String author;

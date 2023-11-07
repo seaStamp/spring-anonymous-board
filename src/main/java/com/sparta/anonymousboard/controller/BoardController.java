@@ -3,7 +3,6 @@ package com.sparta.anonymousboard.controller;
 import com.sparta.anonymousboard.dto.BoardDeleteRequestDto;
 import com.sparta.anonymousboard.dto.BoardRequestDto;
 import com.sparta.anonymousboard.dto.BoardResponseDto;
-import com.sparta.anonymousboard.entity.Board;
 import com.sparta.anonymousboard.service.BoardService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,11 @@
 package com.sparta.anonymousboard.service;
 
-import com.sparta.anonymousboard.dto.BoardDeleteRequestDto;
-import com.sparta.anonymousboard.dto.BoardRequestDto;
-import com.sparta.anonymousboard.dto.BoardResponseDto;
-import com.sparta.anonymousboard.dto.RequestDto;
+import com.sparta.anonymousboard.dto.*;
 import com.sparta.anonymousboard.entity.Board;
+import com.sparta.anonymousboard.exception.BoardException;
+import com.sparta.anonymousboard.exception.ErrorMessage;
 import com.sparta.anonymousboard.repository.BoardRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +22,8 @@ public class BoardService {
 
     public BoardResponseDto createBoard(BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
-        Board saveBoard = boardRepository.save(board);
-        return new BoardResponseDto(saveBoard);
+        boardRepository.save(board);
+        return new BoardResponseDto(board);
     }
 
     public List<BoardResponseDto> getBoards() {
@@ -35,39 +35,39 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponseDto updateBoard(Long id, BoardRequestDto requestDto) {
+    public ResponseEntity<Object> updateBoard(Long id, BoardRequestDto requestDto) {
         Board board = findBoard(id);
-
         if (validatePassword(requestDto, board).isEmpty()) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            return createErrorResponse(ErrorMessage.PASSWORD_NOT_MATCH);
         }
-
         board.update(requestDto);
-        return new BoardResponseDto(board);
+        return ResponseEntity.ok().body(new BoardResponseDto(board));
     }
 
-    public Long deleteBoard(Long id, BoardDeleteRequestDto requestDto) {
+    public ResponseEntity<Object> deleteBoard(Long id, BoardDeleteRequestDto requestDto) {
         Board board = findBoard(id);
-
         if (validatePassword(requestDto, board).isEmpty()) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            return createErrorResponse(ErrorMessage.PASSWORD_NOT_MATCH);
         }
-
         boardRepository.delete(board);
-
-        return id;
+        return ResponseEntity.ok(id);
     }
 
     private Board findBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("선택한 게시글은 존재하지 않습니다.")
+                new BoardException(ErrorMessage.BOARD_NOT_EXIST)
         );
     }
 
     private Optional<Board> validatePassword(RequestDto requestDto, Board board) {
-        if (requestDto.getPassword().equals(board.getPassword())){
+        if (requestDto.getPassword().equals(board.getPassword())) {
             return Optional.of(board);
         }
         return Optional.empty();
+    }
+
+    private ResponseEntity<Object> createErrorResponse(ErrorMessage e) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getStatus(), e.getMessage());
+        return ResponseEntity.status(e.getStatus()).body(errorResponseDto);
     }
 }

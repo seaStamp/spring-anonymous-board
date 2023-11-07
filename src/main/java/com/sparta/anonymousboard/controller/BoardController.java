@@ -4,9 +4,11 @@ import com.sparta.anonymousboard.dto.BoardDeleteRequestDto;
 import com.sparta.anonymousboard.dto.BoardRequestDto;
 import com.sparta.anonymousboard.dto.BoardResponseDto;
 import com.sparta.anonymousboard.service.BoardService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -33,12 +35,12 @@ public class BoardController {
     }
 
     @PutMapping("/boards/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
+    public ResponseEntity<Object> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
         return boardService.updateBoard(id, requestDto);
     }
 
     @DeleteMapping("/boards/{id}")
-    public Long deleteBoard(@PathVariable Long id, @RequestBody BoardDeleteRequestDto requestDto){
+    public ResponseEntity<Object> deleteBoard(@PathVariable Long id, @RequestBody BoardDeleteRequestDto requestDto){
         return boardService.deleteBoard(id,requestDto);
     }
 }

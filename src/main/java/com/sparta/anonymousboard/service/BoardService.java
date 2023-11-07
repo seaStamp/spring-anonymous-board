@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -29,9 +30,7 @@ public class BoardService {
     }
 
     public BoardResponseDto getBoardByID(Long id) {
-        return boardRepository.findById(id).map(BoardResponseDto::new).orElseThrow(() ->
-                new IllegalArgumentException("선택한 게시글은 존재하지 않습니다.")
-        );
+        return new BoardResponseDto(findBoard(id));
     }
 
     private Board findBoard(Long id) {
